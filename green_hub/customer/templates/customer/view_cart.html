@@ -1,0 +1,101 @@
+{% extends "customer/index.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'customer/css/view_cart.css' %}">
+{% endblock %}
+{% block content %}
+
+  <main class="page-shell">
+    <div class="container py-4">
+      <nav class="breadcrumb-ui" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-3">
+          <li class="breadcrumb-item"><a href="customer-home.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="product-listing.html">Products</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Cart</li>
+        </ol>
+      </nav>
+
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="card-soft p-3 p-md-4 rounded-xl">
+            <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+              <div>
+                <div class="fw-black h4 mb-1">Your cart</div>
+                <div class="text-muted fw-700">Static UI with dummy items.</div>
+              </div>
+              <span class="badge badge-soft rounded-pill">{{cart_items_count}} Item</span>
+            </div>
+            {% for item in cart_items %}
+            <div class="d-grid gap-3">
+              <div class = "cart-item">
+                <div class="row g-0 align-items-center">
+                  <div class="col-3 col-md-2 p-2">
+                    <img src="{{item.product_fk.images.url}}" alt="Item" style="width:100%; height:90px; object-fit:cover; border-radius:14px;" />
+                  </div>
+                  <div class="col-6 col-md-7 px-3 py-3">
+                    <div class="fw-black">{{item.product_fk.product_name}}</div>
+                    <div class="text-muted fw-700" style="font-size:.92rem;">{{item.product_fk.unit}}</div>
+                    <div class="mt-2 d-flex gap-2">
+                      <a href="{% url 'customer:remove_cart_item' item.id %}"
+                        class="btn btn-outline-green btn-sm fw-black">Remove</a>
+                      <div class="order-item-qty d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-outline-green btn-sm fw-black">−</button>
+                        <span class="fw-black">{{item.qty}}</span>
+                        <button type="button" class="btn btn-outline-green btn-sm fw-black">+</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-4 col-md-3 text-end px-3 py-3">
+                    <div class="cart-price">&#8377; {{item.total_item_price}}</div>
+                    <div class="text-muted fw-700">Qty {{item.qty}} * &#8377;{{item.product_fk.discount_price_value}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card-soft p-3 p-md-4 rounded-xl sticky-top" style="top:1.2rem;">
+            <div class="fw-black h4 mb-2">Order summary</div>
+            
+
+            <div class="d-grid gap-2 mb-3">
+              <div class="d-flex justify-content-between">
+                <div class="text-muted fw-700">Subtotal</div>
+                <div class="fw-black">&#8377; {{total_price}}</div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="text-muted fw-700">Delivery</div>
+                <div class="fw-black">Free</div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="text-muted fw-700">Discount</div>
+                {% if discount %}
+                <div class="fw-black" style="color:var(--green-700)">-&#8377;{{discount}}</div>
+                {% else %}
+                <div class="fw-black" style="color:var(--green-700)">on order abvoe 500</div>
+                {% endif %}
+
+              </div>
+              <hr />
+              <div class="d-flex justify-content-between">
+                <div class="fw-black">Total</div>
+                <div class="fw-black price fs-4">{{net_price}}</div>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <a href="{% url 'customer:checkout' %}" style = "text-decoration: none;" class="btn btn-green btn-lg fw-black">Proceed to checkout</a>
+              <button type="button" class="btn btn-outline-green fw-black">Continue shopping</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+{% endblock %}

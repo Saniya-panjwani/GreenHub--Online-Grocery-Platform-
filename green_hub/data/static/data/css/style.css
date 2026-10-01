@@ -1,0 +1,130 @@
+/* --- Custom Variables & Soft Green Palette --- */
+:root {
+    --bs-primary: #2d6a4f;
+    --bs-primary-rgb: 45, 106, 79;
+    --bs-primary-hover: #1b4332;
+    --bs-light-green: #e8f5e9;
+    --bs-soft-bg: #f8f9fa;
+    --bs-body-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bs-soft-bg);
+    color: #333333;
+    font-family: var(--bs-body-font-family);
+    letter-spacing: -0.01em;
+}
+h3{
+    background-color: white;
+}
+/* --- Utilities & Typography --- */
+.text-primary { color: var(--bs-primary) !important; }
+.bg-primary { background-color: var(--bs-primary) !important; }
+.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+}
+.btn-primary:hover {
+    background-color: var(--bs-primary-hover);
+    border-color: var(--bs-primary-hover);
+}
+.btn-outline-primary {
+    color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    border-radius: 8px;
+}
+.btn-outline-primary:hover {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+/* --- Component Stylings --- */
+.card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.05) !important;
+}
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 0.625rem 0.75rem;
+    border-color: #dee2e6;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(45, 106, 79, 0.15);
+}
+.nav-link {
+    font-weight: 500;
+}
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+/* --- Seller Layout Architecture --- */
+.seller-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+.seller-sidebar {
+    width: 260px;
+    background: #ffffff;
+    border-right: 1px solid #e9ecef;
+    z-index: 1000;
+}
+.seller-sidebar .nav-link {
+    color: #495057;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    margin: 0.2rem 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.seller-sidebar .nav-link.active, .seller-sidebar .nav-link:hover {
+    background-color: var(--bs-light-green);
+    color: var(--bs-primary);
+}
+.seller-content {
+    flex: 1;
+    background-color: var(--bs-soft-bg);
+}
+
+/* --- Badge & Rating Adjustments --- */
+.badge-discount {
+    background-color: #e63946;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+}
+.badge-new {
+    background-color: var(--bs-primary);
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+}
+.rating-stars {
+    color: #ffb703;
+    font-size: 0.9rem;
+}
+.login-page{
+    background-image: url("https://images.unsplash.com/photo-1542838132-92c53300491e");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.register-page{
+    background-image: url("https://images.unsplash.com/photo-1542838132-92c53300491e");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

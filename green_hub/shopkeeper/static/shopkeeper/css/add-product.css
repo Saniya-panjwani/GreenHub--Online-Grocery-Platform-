@@ -1,0 +1,95 @@
+/* ==========================================
+   ADD PRODUCT PAGE
+========================================== */
+
+.add-product-wrapper{
+    background:#fff;
+    border-radius:24px;
+    padding:30px;
+    box-shadow:0 15px 35px rgba(15,23,42,.08);
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+    padding:30px;
+    border-radius:24px;
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    color:#fff;
+}
+
+.page-header h2{
+    margin:0;
+    font-weight:700;
+    color:#fff;
+}
+
+.page-header p{
+    margin:6px 0 0;
+    color:rgba(255,255,255,.9);
+}
+
+.header-icon{
+    font-size:70px;
+    opacity:.15;
+}
+
+.upload-card{
+    background:#f8fafc;
+    border:2px dashed #d1d5db;
+    border-radius:20px;
+    padding:20px;
+    text-align:center;
+    transition:.3s;
+}
+
+.upload-card:hover{
+    border-color:#22c55e;
+}
+
+.upload-card img{
+    width:100%;
+    border-radius:16px;
+    margin-bottom:15px;
+}
+
+.form-section{
+    background:#fff;
+    border-radius:20px;
+}
+
+.form-label{
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+.form-control,
+.form-select{
+    border-radius:14px;
+    padding:12px;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:#22c55e;
+    box-shadow:0 0 0 .2rem rgba(34,197,94,.15);
+}
+
+.btn-save{
+    background:#22c55e;
+    color:#fff;
+    border:none;
+    border-radius:14px;
+    padding:12px;
+    font-weight:600;
+}
+
+.btn-save:hover{
+    background:#16a34a;
+}
+
+.btn-reset{
+    border-radius:14px;
+}

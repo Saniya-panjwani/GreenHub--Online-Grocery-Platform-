@@ -1,0 +1,331 @@
+{% extends "customer/index.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'customer/css/view_cart.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<main class="page-shell">
+    <form method="POST">
+        {% csrf_token %}
+    <div class="container py-4">
+
+        <nav class="breadcrumb-ui" aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a href="customer-home.html">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="cart.html">Cart</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Checkout
+                </li>
+            </ol>
+        </nav>
+
+        <div class="row g-4">
+
+            <!-- LEFT SIDE -->
+            <div class="col-lg-8">
+                <form method="POST">
+                    {% csrf_token %}
+                    <!-- DELIVERY ADDRESS -->
+                    {% if saved_addresses and not show_address_form %}
+                    <div class="card-soft p-3 p-md-4 rounded-xl mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="fw-black"> Saved Address </h3>
+
+                            <a href="{% url 'customer:checkout' %}?new=true" class="btn btn-outline-success">
+                                +Add New Address
+                            </a>
+                        </div>
+                        {% for address in saved_addresses %}
+                        <div class="border rounded p-3 mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="saved_address"
+                                value="{{address.id}}" {% if address.is_default %} checked {% endif %}>
+                                <label class="form-check-label">
+                                    <strong> {{address.first_name}} {{address.last_name}}</strong> <br>
+                                    {{address.mobile_no}}<br>
+                                    {{address.address}}<br>
+                                    {{address.city}} - {{address.pincode}}
+                                </label>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="card-soft p-3 p-md-4 rounded-xl mb-4">
+
+                        <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
+                            <div>
+                                <div class="fw-black h3 mb-1">
+                                    Delivery Address
+                                </div>
+                                <div class="text-muted fw-700">
+                                    Enter your delivery details.
+                                </div>
+                            </div>
+
+                            <span class="badge badge-soft rounded-pill">
+                                Secure
+                            </span>
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-black">
+                                    First Name
+                                </label>
+                                <input type="text" name="first_name" class="form-control" placeholder="John">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-black">
+                                    Last Name
+                                </label>
+                                <input type="text" name="last_name" class="form-control" placeholder="Appleseed">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-black">
+                                    Email
+                                </label>
+                                <input type="email" name="email" class="form-control" placeholder="john@example.com">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-black">
+                                    Mobile Number
+                                </label>
+                                <input type="text" name="mobile_no" class="form-control" placeholder="+91 9876543210">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-black">
+                                    Address
+                                </label>
+                                <input type="text" name="address" class="form-control" placeholder="Street, Area, Landmark">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-black">
+                                    City
+                                </label>
+                                <input type="text" name="city" class="form-control" placeholder="Ahmedabad">
+                            </div>
+
+                            <!-- <div class="col-md-3">
+                                <label class="form-label fw-black">
+                                    State
+                                </label>
+                                <input type="text" class="form-control" placeholder="Gujarat">
+                            </div> -->
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-black">
+                                    PinCode
+                                </label>
+                                <input type="text" name="pincode" class="form-control" placeholder="380001">
+                            </div>
+
+                        </div>
+                        <div class="row g-3 mt-2">
+
+                            <!-- <div class="col-md-6">
+                                <label class="form-label fw-black">
+                                    Delivery Slot
+                                </label>
+
+                                <select class="form-select">
+                                    <option>Today • 6:00 PM - 8:00 PM</option>
+                                    <option>Today • 8:00 PM - 10:00 PM</option>
+                                    <option>Tomorrow • 10:00 AM - 12:00 PM</option>
+                                </select>
+                            </div> -->
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-black">
+                                    Delivery Notes
+                                </label>
+
+                                <input type="text"
+                                    name="delivery_note"
+                                    class="form-control"
+                                    placeholder="Leave at front door">
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <button type="submit" name="save_address" class="btn btn-success">
+                        Save Address
+                    </button>
+                    {% endif %}
+
+                    <!-- PAYMENT METHOD -->
+                    <div class="card-soft p-3 p-md-4 rounded-xl">
+
+                        <div class="d-flex align-items-start justify-content-between mb-4">
+                            <div>
+                                <div class="fw-black h3 mb-1">
+                                    Payment Method
+                                </div>
+
+                                <div class="text-muted fw-700">
+                                    Choose your preferred payment option.
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="payment_method" id="payment_method" value="razorpay"/>
+                        <!-- Razorpay Card -->
+                        <div class="pay-card-wrap pay-selected" id="razorpay-card" onclick="selectPayment('razorpay')">
+                            <div class="pay-row">
+                                <div class="pay-left-group">
+                                    <div class="pay-icon upi-icon">
+                                        <i class="bi bi-wallet2"></i>
+                                    </div>
+                                    <div class="pay-info">
+                                        <div class="pay-name">
+                                            Razorpay (UPI / Card / Wallet)
+                                        </div>
+                                        <div class="pay-desc">
+                                            Fast & secure payment
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pay-check" id="razorpay-check"></div>
+                            </div>
+                        </div>
+
+                        <!-- Cash On Delivery Card -->
+                        <div class="pay-card-wrap" id="cod-card" onclick="selectPayment('cod')">
+                            <div class="pay-row">
+                                <div class="pay-left-group">
+                                    <div class="pay-icon cod-icon">
+                                        <i class="bi bi-cash-stack"></i>
+                                    </div>
+                                    <div>
+                                        <div class="pay-name">Cash on Delivery</div>
+                                        <div class="pay-desc">Pay when product arrives</div>
+                                    </div>
+                                </div>
+                                <div class="pay-check" id="cod-check"></div>
+                            </div>
+                            <div class="cod-note">
+                                Pay ₹{{net_price}} in cash at delivery time.
+                            </div>
+                        </div>
+                        <div class="mt-4 d-grid">
+
+                            <button
+                                class="btn btn-green btn-lg fw-black"
+                                type="submit" name="place_order">
+
+                                Place Order
+
+                            </button>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+          <!-- RIGHT SIDE ORDER SUMMARY (With Cart Items matching reference) -->
+            <div class="col-lg-4">
+                <div class="card-soft p-3 p-md-4 rounded-xl sticky-top" style="top:1.2rem;">
+                    <div class="fw-black h4 mb-3">Order Summary</div>
+
+        <!-- Individual Cart Items List -->
+        <div class="cart-summary-items mb-3">
+            {% for item in cart_items %}
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="d-flex align-items-center gap-3">
+                    {% if item.product_fk.images %}
+                        <img src="{{ item.product_fk.images.url }}" class="summary-item-img" alt="{{ item.product_fk.product_name }}">
+                    {% else %}
+                        <div class="summary-item-img d-flex align-items-center justify-content-center">📦</div>
+                    {% endif %}
+                    <div>
+                        <div class="fw-bold fs-6 text-dark" style="line-height: 1.2;">{{ item.product_fk.product_name }}</div>
+                        <small class="text-muted">Qty: {{ item.qty }}</small>
+                    </div>
+                </div>
+                <div class="fw-bold text-teal" style="color: #0d9488;">
+                    ₹{{ item.price }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <hr class="my-3" />
+
+        <!-- Price Breakdown -->
+        <div class="d-grid gap-2 mb-3">
+            <div class="d-flex justify-content-between">
+                <div class="text-muted fw-700">Subtotal</div>
+                <div class="fw-black">₹{{total_price}}</div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="text-muted fw-700">Discount</div>
+                {% if discount %}
+                    <div class="fw-black text-danger">-₹{{discount}}</div>
+                {% else %}
+                    <div class="fw-black text-muted">₹0</div>
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="text-muted fw-700">Delivery</div>
+                <div class="fw-black text-success">Free</div>
+            </div>
+            
+            <hr class="my-2" />
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="fw-black fs-5">Total</div>
+                <div class="fw-black price fs-3" style="color:#0d9488;">₹{{net_price}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        </div>
+
+    </div>
+</form>
+</main>
+<script>
+    function selectPayment(method){
+        let razorpayCard = document.getElementById("razorpay-card");
+        let codCard = document.getElementById("cod-card");
+
+        let razorpayCheck = document.getElementById("razorpay-check");
+        let codCheck = document.getElementById("cod-check");
+
+        let payment_method = document.getElementById("payment_method");
+
+        razorpayCard.classList.remove("pay-selected");
+        codCard.classList.remove("pay-selected");
+
+        razorpayCheck.classList.remove("checked");
+        codCheck.classList.remove("checked");
+
+        if (method == "razorpay") {
+            razorpayCard.classList.add("pay-selected");
+            razorpayCheck.classList.add("checked");
+            payment_method.value = "razorpay";
+        }
+        else if (method == "cod") {
+            codCard.classList.add("pay-selected");
+            codCheck.classList.add("checked");
+            payment_method.value = "cod";
+        }
+
+    }
+</script>
+{% endblock %}

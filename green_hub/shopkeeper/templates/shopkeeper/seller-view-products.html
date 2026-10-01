@@ -1,0 +1,132 @@
+{% extends 'shopkeeper/seller-dashboard.html' %}
+{% block content %}
+
+<main class="page-shell">
+
+<div class="container py-4">
+
+    <!-- Header -->
+
+    <div class="page-header mb-4">
+
+        <div>
+
+            <h2>Your Products</h2>
+
+            <p class="mb-0">
+                Browse and manage all products available in your store.
+            </p>
+
+        </div>
+
+        <a href="{% url 'shopkeeper:manage-product' %}" class="btn btn-light">
+
+            <i class="bi bi-list-task me-2"></i>
+
+            List View
+
+        </a>
+
+    </div>
+
+
+
+    <!-- Search -->
+
+    <div class="search-card mb-4">
+
+        <div class="row g-3">
+
+            <div class="col-lg-8">
+
+                <div class="input-group">
+
+                    <span class="input-group-text border-0 bg-white">
+
+                        <i class="bi bi-search"></i>
+
+                    </span>
+
+                    <input type="text" class="form-control border-0" placeholder="Search products...">
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <select class="form-select">
+
+                    <option>All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{category.id}}">{{category.category_name}}</option>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="row g-4">
+
+        <!-- CARD 1 -->
+        {% for product in my_products_all %}
+        <div class="col-md-6 col-xl-4">
+
+            <div class="product-card">
+
+                <div class="card-header-custom">
+
+                    <span class="category-tag">{{product.Category_fk.category_name}}</span>
+                    {% if product.discount_price %}
+                    <span class="discount-tag">{{ product.discount_price }} Rs Off</span>
+                    {% endif %}
+
+                </div>
+
+                <div class="product-image-box">
+
+                    <img src="{{product.images.url}}" class="product-image" alt="Product">
+
+                </div>
+
+                <div class="product-details">
+
+                    <h5 class="product-title"> {{product.product_name}}</h5>
+
+                    <p class="product-code">{{product.sku}}</p>
+
+                    <div class="price-section">
+
+                        {% if product.discount_price %}
+                        <span class="old-price">&#8377; {{ product.base_price }}</span>
+                        <span class="new-price">&#8377; {{ product.discount_price_value }}</span>
+                        {% else %}
+                        <span class="new-price">&#8377; {{ product.base_price }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid mt-3">
+
+                        <a href="#"class="btn btn-success"><i class="bi bi-eye-fill me-2"></i>View Product</a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,273 @@
+{% extends 'shopkeeper/seller-dashboard.html' %}
+{% block content %}
+
+<main class="page-shell">
+
+<div class="container py-4">
+
+    <!-- Header -->
+
+    <div class="page-header mb-4">
+
+        <div>
+
+            <h2>Manage Products</h2>
+
+            <p class="mb-0">
+                Edit, update and manage all your store products.
+            </p>
+
+        </div>
+
+        <a href="{% url 'shopkeeper:add-product' %}" class="btn btn-light">
+
+            <i class="bi bi-plus-circle me-2"></i>
+
+            Add Product
+
+        </a>
+
+    </div>
+
+
+
+    <!-- Search -->
+    <form action="" method="get">
+    <div class="search-card mb-4">
+
+        <div class="row g-3">
+
+            <div class="col-lg-6">
+
+                <div class="input-group">
+
+                    <span class="input-group-text border-0 bg-white">
+
+                        <i class="bi bi-search"></i>
+
+                    </span>
+
+                    <input
+                    type="text"
+                    class="form-control border-0"
+                    placeholder="Search Product..." name="search">
+
+                </div>
+
+            </div>
+            
+            <div class="col-lg-3">
+
+                <select class="form-select" name="category_name" onchange="this.form.submit()">
+
+                    <option value="">All Categories</option>
+
+                    {% for category in category_all %}
+                    <option value="{{category.category_name}}">{{category.category_name}}</option>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="col-lg-3">
+                <button class="btn btn-danger w-100">
+                    delete all
+                </button>
+            </div>
+        </div>
+
+    </div>
+    </form>
+
+
+    <div class="table-card">
+
+        <div class="table-responsive">
+
+            <table class="table align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Product</th>
+
+                        <th>Category</th>
+
+                        <th>Price</th>
+
+                        <th>Stock</th>
+
+                        <th>Status</th>
+
+                        <th class="text-center">
+
+                            Actions
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    {% for product in my_products_all %}
+                    <tr>
+
+                        <td>
+
+                            <div class="d-flex align-items-center">
+
+                                <img src="{{product.images.url}}"
+
+                                     class="table-product-img" height="100px" width="100px">
+
+                                <div class="ms-3">
+
+                                    <h6 class="mb-1">
+
+                                        {{product.product_name}}
+
+                                    </h6>
+
+                                    <small class="text-muted">
+
+                                        {{product.sku}}
+
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <span class="category-tag">
+
+                               {{product.Category_fk.category_name}}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            {{product.discount_price_value}}
+
+                        </td>
+
+                        <td>
+
+                            {{product.stock_qty}}
+
+                        </td>
+
+                        <td>
+
+                            <span class="stock in">
+
+                                In Stock
+
+                            </span>
+
+                        </td>
+
+                        <td class="text-center">
+
+                            <a href="{% url 'shopkeeper:edit-product' pk=product.id %}"
+
+                               class="action-btn edit">
+
+                                <i class="bi bi-pencil-fill"></i>
+
+                            </a>
+
+                            <a href="{% url 'shopkeeper:delete-product' pk=product.id %}"
+
+                               class="action-btn delete">
+
+                                <i class="bi bi-trash-fill"></i>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <nav class="mt-4">
+
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item disabled">
+
+                <a class="page-link">
+
+                    Previous
+
+                </a>
+
+            </li>
+
+            <li class="page-item active">
+
+                <a class="page-link">
+
+                    1
+
+                </a>
+
+            </li>
+
+            <li class="page-item">
+
+                <a class="page-link">
+
+                    2
+
+                </a>
+
+            </li>
+
+            <li class="page-item">
+
+                <a class="page-link">
+
+                    3
+
+                </a>
+
+            </li>
+
+            <li class="page-item">
+
+                <a class="page-link">
+
+                    Next
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </nav>
+
+</div>
+
+</main>
+
+{% endblock %}

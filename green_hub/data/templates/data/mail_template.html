@@ -1,0 +1,92 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+</head>
+<body style="margin:0; padding:0; background:#f4f4f4; font-family:Arial, Helvetica, sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" bgcolor="#f4f4f4">
+    <tr>
+        <td align="center" style="padding:40px 15px;">
+
+            <table width="600" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="border-radius:12px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
+
+                <!-- Header -->
+                <tr>
+                    <td align="center" bgcolor="#4F46E5" style="padding:30px;">
+                        <h1 style="color:white; margin:0;">
+                            FreshCart
+                        </h1>
+                    </td>
+                </tr>
+
+                <!-- Body -->
+                <tr>
+                    <td style="padding:40px; color:#333333;">
+
+                        <h2 style="margin-top:0;">
+                            Password Reset Request
+                        </h2>
+
+                        <p style="font-size:16px; line-height:28px;">
+                            Hello <strong>{{ user.name }}</strong>,
+                        </p>
+
+                        <p style="font-size:16px; line-height:28px;">
+                            We received a request to reset the password for your FreshCart account.
+                            Click the button below to create a new password.
+                        </p>
+
+                       <h2>Your OTP</h2>
+
+                        <h1 style="letter-spacing:8px;">
+                            {{ data.otp }}
+                        </h1>
+
+                        <p>
+                        OTP is valid for 10 minutes.
+                        </p>
+
+                        <p style="font-size:15px; color:#666;">
+                            If the button doesn't work, copy and paste this link into your browser:
+                        </p>
+
+                        <p style="word-break:break-all;">
+                            <a href="{{ reset_link }}" style="color:#4F46E5;">
+                                {{ reset_link }}
+                            </a>
+                        </p>
+
+                        <hr style="margin:30px 0; border:none; border-top:1px solid #e5e5e5;">
+
+                        <p style="font-size:14px; color:#777777;">
+                            This password reset link will expire in <strong>15 minutes</strong>.
+                        </p>
+
+                        <p style="font-size:14px; color:#777777;">
+                            If you didn't request a password reset, you can safely ignore this email.
+                            Your password will remain unchanged.
+                        </p>
+
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td align="center" bgcolor="#fafafa" style="padding:25px; color:#888888; font-size:13px;">
+
+                        © 2026 FreshCart <br>
+                        Made with ❤️ for FreshCart users.
+
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
